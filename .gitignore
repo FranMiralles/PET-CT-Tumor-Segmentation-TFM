@@ -1,3 +1,9 @@
-*data
+/data/
+
+*__pycache__*
 
 *.venv*
+
+*.egg-info*
+
+relevant_studies.txt
