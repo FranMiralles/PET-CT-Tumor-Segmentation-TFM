@@ -1,0 +1,9 @@
+Annotated CT slices: 20381 | patients: 355
+split  has_pet
+test   False       34
+       True        22
+train  False      155
+       True        92
+val    False       33
+       True        19
+dtype: int64
