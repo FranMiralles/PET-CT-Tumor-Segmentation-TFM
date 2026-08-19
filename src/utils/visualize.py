@@ -28,6 +28,7 @@ def plot_correlation_matrix(
     figsize: tuple[float, float] | None = None,
     annot: bool = True,
     triangle: bool = True,
+    languaje: str = "en"
 ) -> tuple[plt.Figure, plt.Axes]:
     """
     Draws a heatmap of a mixed correlation/association matrix and optionally
@@ -43,6 +44,7 @@ def plot_correlation_matrix(
           number of variables when None
         - annot: bool, if True annotate the numeric value of each cell
         - triangle: bool, if True show only the lower triangle (matrix is symmetric)
+        - languaje: str, if "es" the title is translated to Spanish
     Returns:
         - fig: matplotlib.figure.Figure, the created figure
         - ax: matplotlib.axes.Axes, the heatmap axes
@@ -87,7 +89,7 @@ def plot_correlation_matrix(
         square=True,
         linewidths=0.5,
         linecolor="white",
-        cbar_kws={"shrink": 0.8, "label": "Association / correlation"},
+        cbar_kws={"shrink": 0.8, "label": "Association / correlation" if languaje == "en" else "Asociación / correlación"},
         annot_kws={"fontsize": 7},
         ax=ax,
     )

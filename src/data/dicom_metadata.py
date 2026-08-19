@@ -1,25 +1,3 @@
-"""Extraction of DICOM header metadata for the Lung-PET-CT-Dx dataset.
-
-The dataset under ``data/raw/images`` is organised as::
-
-    data/raw/images/<Patient>/<Study>/<Series>/<instance>.dcm
-
-with ~250k DICOM instances spread over CT and PT (PET) series. This module
-reads the header of every instance (the pixel data is skipped) and flattens a
-curated set of tags into a tidy ``pandas`` DataFrame with one row per instance.
-
-The relevant tags are grouped in three families:
-
-  - GENERAL : identifiers, geometry and pixel representation shared by every
-    modality.
-  - CT      : acquisition parameters specific to computed tomography.
-  - PET     : quantification parameters specific to positron emission
-    tomography, including the radiopharmaceutical information sequence.
-
-Because the full scan is expensive, :func:`build_metadata_dataframe` caches its
-result to a parquet file and reuses it on subsequent calls.
-"""
-
 from __future__ import annotations
 
 import os
@@ -283,12 +261,16 @@ def iter_dicom_files(root: str | Path) -> Iterator[Path]:
 
 
 def build_metadata_dataframe(
-    root: str | Path = "data/raw/images",
+    root: str | Path = "data/raw/lung-pet-ct/images",
     cache_path: str | Path | None = "data/processed/image_metadata.parquet",
     force: bool = False,
     show_progress: bool = True,
 ) -> pd.DataFrame:
     """
+    Extraction of DICOM header metadata for the Lung-PET-CT-Dx dataset.
+    The dataset under ``data/raw/lung-pet-ct/images`` is organised as::
+        data/raw/lung-pet-ct/images/<Patient>/<Study>/<Series>/<instance>.dcm
+        
     Builds (and caches) the per-instance DICOM metadata DataFrame. The header of
     every .dcm file under root is read once, written to cache_path (parquet) and
     reused on later calls unless force is True.
